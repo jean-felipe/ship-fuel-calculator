@@ -1,0 +1,48 @@
+<%= form_with model: @calculation, url: @calculation do |form| %>
+
+  <% if @calculation.errors.any? %>
+    <div style="color: red">
+      <h2><%= pluralize(@calculation.errors.count, "error") %> prohibited this calculation from being saved:</h2>
+
+      <ul>
+        <% @calculation.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="columns">
+    <div class="is-three-quarters">
+      <%= form.label :title, style: "display: block" %>
+      <%= form.text_field :title, class: "input" %>
+    </div>
+  </div>
+
+  <div class="columns mt-2">
+    <div class="is-one-third">
+      <%= form.label :calculation_type, style: "display: block" %>
+      <div class="select">
+        <%= form.select :calculation_type,
+            options_for_select(Calculation::TYPES),
+            {}, class: "select" %>
+      </div>
+    </div>
+  </div>
+  <div class="columns mt-2">
+     <div class="is-one-third">
+      <%= form.label :mass, style: "display: block" %>
+      <%= form.number_field :mass, step: "any", class: "input" %>
+    </div>
+
+    <div class="is-one-third ml-3">
+      <%= form.label :gravity, style: "display: block" %>
+      <%= form.number_field :gravity, step: "any", class: "input" %>
+    </div>
+
+  </div>
+    <br />
+    <%= form.submit class: 'button is-success' %>
+  </div>
+
+<% end %>

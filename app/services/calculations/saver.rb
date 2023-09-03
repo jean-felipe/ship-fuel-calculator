@@ -10,8 +10,8 @@ module Calculations
     end
 
     def execute
-      gravity = @params[:gravity]
-      mass = @params[:mass]
+      gravity = @params[:gravity].to_f
+      mass = @params[:mass].to_f
       type = @params[:calculation_type]
 
       @calculation.fuel_required = calculate_total_fuel(mass, gravity, type)

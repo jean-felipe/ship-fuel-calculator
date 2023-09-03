@@ -1,14 +1,18 @@
 class CalculationsController < ApplicationController
   before_action :find_calculator, only: :show
 
+  def new
+    @calculation = Calculation.new
+  end
+
   def create
     creator.execute
 
     respond_to do |format|
-      if creator.errors.some?
-        format.html { render :new, status: :unprocessable_entity }
+      if creator.errors
+        format.html { redirect_to root_path, notice: 'An Error happened!'}
       else
-        format.html { redirect_to calculation_url(creator.calculation), notice: 'Calculation Done!' }
+        format.html { redirect_to root_path, notice: 'Calculation Done!' }
       end
     end
   end
@@ -28,6 +32,6 @@ class CalculationsController < ApplicationController
   end
 
   def find_calculator
-    @calculation = Calculation.find(params[:id])
+    @calc = Calculation.find(params[:id])
   end
 end

@@ -1,0 +1,38 @@
+<% unless @calculations.empty? %>
+<div class="container box">
+  <table class="table is-bordered is-striped">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Title</th>
+        <th>Type</th>
+        <th>Fuel</th>
+        <th>Gravity</th>
+        <th>Mass</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody >
+      <% @calculations.each do |calc| %>
+        <tr>
+          <td><%= calc.id %></td>
+          <td><%= calc.title %></td>
+          <td><%= calc.calculation_type %></td>
+          <td><%= calc.fuel_required %></td>
+          <td><%= calc.gravity %></td>
+          <td><%= calc.mass %></td>
+          <td>
+            <%= link_to calculation_path(calc), class: 'button is-primary' do %>
+              <span class="icon is-small">
+                <i class="fas fa-eye"></i>
+                </span>
+            <% end %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+
+</div>
+
+<% end %>
