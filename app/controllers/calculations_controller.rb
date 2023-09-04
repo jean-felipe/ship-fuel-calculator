@@ -22,13 +22,27 @@ class CalculationsController < ApplicationController
   private
 
   def creator
-    @creator ||= Calculations::Saver.new(calculations_params)
+    @creator ||= Calculations::Saver.new(
+      calculations_params
+      .except(:first_gravity_launch, :second_gravity_launch, :first_gravity_landing, :second_gravity_landing)
+      .merge(directive_params)
+    )
   end
 
   def calculations_params
     params.require(:calculation).permit(
-      :title, :mass, :gravity, :calculation_type
+      :title, :mass, :first_gravity_launch, :second_gravity_launch,
+      :first_gravity_landing, :second_gravity_landing
     )
+  end
+
+  def directive_params
+    {
+      directives: [
+        [:launch, calculations_params[:first_gravity_launch]], [:land, calculations_params[:first_gravity_landing]],
+        [:launch, calculations_params[:second_gravity_launch]], [:land, calculations_params[:second_gravity_landing]]
+      ]
+    }
   end
 
   def find_calculator

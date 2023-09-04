@@ -15,6 +15,4 @@
 #
 class Calculation < ApplicationRecord
   TYPES = %w[launch landing].freeze
-
-  enum calculation_type: TYPES
 end

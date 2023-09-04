@@ -19,7 +19,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_03_191404) do
     t.decimal "gravity", precision: 15, scale: 4
     t.decimal "fuel_required", precision: 15, scale: 4
     t.string "title"
-    t.integer "calculation_type", default: 0
+    t.jsonb "directives", default: {}
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

@@ -19,28 +19,73 @@
     </div>
   </div>
 
+  <div class="columns">
+    <div class="is-three-quarters">
+      <%= form.label :mass, style: "display: block" %>
+      <%= form.text_field :mass, class: "input" %>
+    </div>
+  </div>
+
   <div class="columns mt-2">
     <div class="is-one-third">
-      <%= form.label :calculation_type, style: "display: block" %>
+      <label style="display: block">Departure</label>
       <div class="select">
         <%= form.select :calculation_type,
-            options_for_select(Calculation::TYPES),
+            options_for_select(['launch']),
             {}, class: "select" %>
       </div>
     </div>
-  </div>
-  <div class="columns mt-2">
-     <div class="is-one-third">
-      <%= form.label :mass, style: "display: block" %>
-      <%= form.number_field :mass, step: "any", class: "input" %>
+
+    <div class="is-one-third ml-3">
+      <%= form.label :first_gravity_launch, style: "display: block" %>
+      <%= form.number_field :first_gravity_launch, step: "any", class: "input" %>
+    </div>
+
+    <div class="is-one-third ml-2">
+     <label style="display: block">Landing</label>
+      <div class="select">
+        <%= form.select :calculation_type,
+            options_for_select(['landing']),
+            {}, class: "select" %>
+      </div>
     </div>
 
     <div class="is-one-third ml-3">
-      <%= form.label :gravity, style: "display: block" %>
-      <%= form.number_field :gravity, step: "any", class: "input" %>
+      <%= form.label :first_gravity_landing, style: "display: block" %>
+      <%= form.number_field :first_gravity_landing, step: "any", class: "input" %>
+    </div>
+  </div>
+
+  <div class="columns mt-2">
+    <div class="is-one-third">
+      <label style="display: block">Back</label>
+      <div class="select">
+        <%= form.select :calculation_type,
+            options_for_select(['launch']),
+            {}, class: "select" %>
+      </div>
     </div>
 
+    <div class="is-one-third ml-3">
+      <%= form.label :second_gravity_launch, style: "display: block" %>
+      <%= form.number_field :second_gravity_launch, step: "any", class: "input" %>
+    </div>
+
+    <div class="is-one-third ml-2">
+     <label style="display: block">Landing</label>
+      <div class="select">
+        <%= form.select :calculation_type,
+            options_for_select(['landing']),
+            {}, class: "select" %>
+      </div>
+    </div>
+
+    <div class="is-one-third ml-3">
+      <%= form.label :second_gravity_landing, style: "display: block" %>
+      <%= form.number_field :second_gravity_landing, step: "any", class: "input" %>
+    </div>
   </div>
+
     <br />
     <%= form.submit class: 'button is-success' %>
   </div>

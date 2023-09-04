@@ -6,19 +6,26 @@ module Calculations
 
     def initialize(params)
       @params = params
-      @calculation = Calculation.new(@params)
+      @calculation = Calculation.new(@params.except(:directives))
     end
 
     def execute
-      gravity = @params[:gravity].to_f
       mass = @params[:mass].to_f
-      type = @params[:calculation_type]
+      directives = @params[:directives]
 
-      @calculation.fuel_required = calculate_total_fuel(mass, gravity, type)
+      fuel_weight = directives.map do |directive|
+        type, gravity = directive
+        fuel = calculate_total_fuel(mass, gravity.to_f, type)
+        mass += fuel
+        fuel
+      end
 
-      return if @calculation.save!
-
-      @errors = @calculation.errors.messages
+      @calculation.update!(
+        fuel_required: fuel_weight.sum.to_i,
+        directives: { directives: }
+      )
+    rescue ActiveRecord::RecordInvalid => e
+      @errors = e.record.errors.messages
     end
 
     private
@@ -27,19 +34,19 @@ module Calculations
       results = []
 
       while mass.positive?
-        results << send("calculate_#{type}", mass, gravity).to_i
-        mass = send("calculate_#{type}", mass, gravity).to_i
+        results << send("calculate_#{type}", mass, gravity)
+        mass = send("calculate_#{type}", mass, gravity)
       end
 
       results = results.reject(&:negative?)
-      results.sum
+      results.sum.round(2)
     end
 
     def calculate_launch(mass, gravity)
       mass * gravity * 0.042 - 33
     end
 
-    def calculate_landing(mass, gravity)
+    def calculate_land(mass, gravity)
       mass * gravity * 0.033 - 42
     end
   end
